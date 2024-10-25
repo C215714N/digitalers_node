@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3">
+    <title>Node Paint</title>
+    <link rel="stylesheet" href="styles/default.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app/index.js" type="module"></script>
+</body>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker
+                .register("service-worker.js")
+                .then((registration) => {
+                    console.log("Service Worker registered: ", registration);
+                })
+                .catch((registrationError) => {
+                    console.error("Service Worker registration failed: ", registrationError);
+                });
+        });
+    }
+</script>
+</html>
