@@ -1,4 +1,4 @@
-import { config, canvas, ctx, buffer, btx } from "./global.js"
+import { config, canvas, ctx, buffer, btx, socket } from "./global.js"
 import { freeHand, line, rect, circle } from "./shape.js";
 import { getCoords, box } from "./utils.js";
 
@@ -31,15 +31,27 @@ export const startDraw = (e) => {
 export const draw = (e) => {
     const { isDrawing, shape } = config
     getCoords(e,2)
-    if(isDrawing && shape === "freeHand") freeHand(config,ctx)
-    Object.entries(shapes).map(([name,shape]) => {
-        if(isDrawing && config.shape === name) {
+    if (isDrawing){
+        if(shape === "freeHand") freeHand(config,ctx)
+        Object.entries(shapes).map(([name,shape]) => {
+        if(config.shape === name) {
             shape(config,btx)
-            setTimeout(() => btx.clearRect(0,0, canvas.width, canvas.height), 10)
-    }});
+            clearCtx()
+        }});
+    }
 }
 export const stopDraw = (e) => {
     config.isDrawing = false;
     Object.entries(shapes).map(([name,shape]) => 
         config.shape === name && shape(config,ctx))
+    socket.emit('save', config)
+}
+export const clearCtx = () => setTimeout(() => 
+    btx.clearRect(0,0, canvas.width, canvas.height), 10)
+
+export const load = (array) => {
+    array.map(draw => {
+        Object.entries(shapes).map(([name,shape]) => 
+            config.shape === name && shape(draw, ctx))
+    })
 }

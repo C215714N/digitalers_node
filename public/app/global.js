@@ -38,7 +38,7 @@ export const
     buttons = [
         Object.assign(document.createElement('button'),{
             innerHTML: "Guardar",
-            onclick: () => socket.emit("save", { name: prompt("¿con que nombre desea guardar el dibujo?"), canvas, ctx})
+            onclick: () => socket.emit("save", { name: prompt("¿con que nombre desea guardar el dibujo?"), context: canvas.getContext('2d')})
         }),
         Object.assign(document.createElement('button'),{
             innerHTML: "Cargar",
