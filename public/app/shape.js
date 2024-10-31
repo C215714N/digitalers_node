@@ -1,12 +1,11 @@
-import { ctx } from "./global.js"
 import { diff, hyp } from "./utils.js"
 
-export function freeHand(coords) {
+export function freeHand(coords, ctx) {
     const { x2, y2 } = coords
-    context.lineTo(x2,y2)
-    context.stroke()
+    ctx.lineTo(x2,y2)
+    ctx.stroke()
 }
-export function line(coords) {
+export function line(coords, ctx) {
     const { x1, y1, x2, y2 } = coords
     ctx.beginPath()
     ctx.moveTo(x1, y1)
@@ -14,14 +13,14 @@ export function line(coords) {
     ctx.stroke()
     ctx.closePath()
 }
-export function rect(coords) {
+export function rect(coords, ctx) {
     const { x1, y1 } = coords
     const [width, height] = diff(coords)
     ctx.beginPath()
     ctx.strokeRect(x1, y1, width, height)
     ctx.closePath()
 }
-export function circle(coords) {
+export function circle(coords, ctx) {
     const { x1, y1 } = coords
     const hypo = hyp(diff(coords))
     ctx.beginPath()

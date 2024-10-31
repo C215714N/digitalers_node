@@ -1,4 +1,4 @@
-import { root, canvas, options } from "./global.js"
+import { root, canvas, options, buttons, buffer } from "./global.js"
 import { setOption, resize, startDraw, draw, stopDraw } from "./canvas.js";
 
 export default function Events(){
@@ -7,6 +7,9 @@ export default function Events(){
         setOption(id, value))
         root.append(opt)
     })
+    buttons.forEach(btn => {
+        root.append(btn)
+    })
     canvas.addEventListener('mousedown', startDraw)
     canvas.addEventListener('mousemove', draw)
     canvas.addEventListener('mouseup', stopDraw)
@@ -14,5 +17,6 @@ export default function Events(){
     window.addEventListener('load', resize)
     window.addEventListener('resize', resize)
 
-    root.append(canvas) 
+    root.append(canvas)
+    root.append(buffer)
 }
